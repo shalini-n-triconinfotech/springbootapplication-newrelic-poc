@@ -1,6 +1,7 @@
 version: "3.2"
 services:
   mysql:
+    restart: always
     container_name : mysql-docker
     image: mysql
     environment:
@@ -8,15 +9,20 @@ services:
        MYSQL_DATABASE : institution
     ports:
       - "6033:3306"
+    volumes:
+     - ./mysql-data:/var/lib/mysql
   studentapplication:
-    image: springboot-relic1
+    container_name : studentapplication
+    restart: always
+    image: springboot-application-one 
     ports:
       - "8081:8081"
-    links:
+    depends_on:
       - mysql
-  relicapplication:
-    image: springboot-relic2
+  StudentApplication2:
+    container_name : studentapplicationtwo
+    image: springboot-application-two 
     ports:
       - "8082:8082"
-
-    
+    depends_on:
+      - studentapplication
