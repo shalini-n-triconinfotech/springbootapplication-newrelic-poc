@@ -1,0 +1,22 @@
+version: "3.2"
+services:
+  mysql:
+    container_name : mysql-docker
+    image: mysql
+    environment:
+       MYSQL_ROOT_PASSWORD: shalini123
+       MYSQL_DATABASE : institution
+    ports:
+      - "6033:3306"
+  studentapplication:
+    image: springboot-relic1
+    ports:
+      - "8081:8081"
+    links:
+      - mysql
+  relicapplication:
+    image: springboot-relic2
+    ports:
+      - "8082:8082"
+
+    

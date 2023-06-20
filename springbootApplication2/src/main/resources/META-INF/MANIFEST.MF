@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Main-Class: com.example.relic2.Relic2Application
+
