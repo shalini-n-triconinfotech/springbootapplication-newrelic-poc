@@ -1,16 +1,19 @@
 package com.example.relic.util;
-
+import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
-
 @Data
-@Table("students")
+@Entity
+@Table(name = "students")
 public class Students {
     @Id
-    public  int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
+    private Integer id;
     public String studentname;
-    public int age;
+    public Integer age;
     public String address;
-    public int course_id;
+    public Integer course_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id",insertable = false,updatable = false)
+    private Courses courses;
 }
