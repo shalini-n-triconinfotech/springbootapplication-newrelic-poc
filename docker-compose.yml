@@ -14,15 +14,29 @@ services:
   studentapplication:
     container_name : studentapplication
     restart: always
-    image: springboot-application-one 
+    image: studentcallapp
     ports:
       - "8081:8081"
     depends_on:
       - mysql
-  StudentApplication2:
-    container_name : studentapplicationtwo
-    image: springboot-application-two 
+  rest-call-to-student-application:
+    container_name : restcalltostudentapplication 
+    image: restcallapp 
     ports:
       - "8082:8082"
     depends_on:
       - studentapplication
+  agent:
+    container_name: newrelic-infra
+    image: newrelic/infrastructure:latest
+    cap_add:
+      - SYS_PTRACE
+    network_mode: host
+    pid: host
+    privileged: true
+    volumes:
+      - "/:/host:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      NRIA_LICENSE_KEY: "2c32b11e5217febbd8386c61520684b8b653NRAL"
+    restart: unless-stopped
